@@ -28,4 +28,7 @@ Constants:
 - int minWordLength = 2; This dictates the minimum acceptable length of a word that can be included. This prevents single letters from being added to the puzzle as valid words.
 - int wordRetry = 100; This dictates the number of times the program will attempt to add a word to the grid before giving up and moving onto the next word.
 
-If all of the words are too short (smaller than minWordLength) or too long to fit in the grid, no words can be added to the puzzle, and the program will print out an error message and terminate.
+Errors and possible outcomes:
+- If one of the user-provided inputs is invalid or the file cannot be found or read or is empty, the program will re-prompt the user for a valid input.
+- If all of the words are too short (smaller than minWordLength) or too long to fit in the grid, no words can be added to the puzzle, and the program will print out an error message and terminate.
+- Otherwise, the program will print out the finished puzzle with the user-requested number of words, or if that was not possible, with as many words as it was able to add.
