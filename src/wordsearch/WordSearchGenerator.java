@@ -10,10 +10,6 @@ import java.util.*;
 
 public class WordSearchGenerator {
 	
-	// min and max length of square word search grid
-	public static final int minSize = 5;
-	public static final int maxSize = 25;
-	
 	// minimum acceptable word length
 	public static final int minWordLength = 2;
 	
@@ -39,30 +35,36 @@ public class WordSearchGenerator {
 	    }
 	    
 	    // read in grid length
-		System.out.println("Enter the side length of the word search grid (between " + minSize + " and " + maxSize + "):");
+		System.out.println("Enter the side length of the word search grid:");
 		String sizeString = in.nextLine();
 		
 		// check if size is valid int and within bounds, and if not, then re-prompt and retry
-		while ((!stringIsNatural(sizeString)) || Integer.parseInt(sizeString) < minSize || Integer.parseInt(sizeString) > maxSize) {
-			System.out.println("Invalid input! Enter the side length of the word search grid (between " + minSize + " and " + maxSize + "):");
+		while (!stringIsNatural(sizeString)) {
+			System.out.println("Invalid input! Enter the side length of the word search grid:");
 			sizeString = in.nextLine();
 		}
 		int size = Integer.parseInt(sizeString);
 		
-		System.out.println("Enter the number of words to use in the word search:");
+		System.out.println("Enter the number of words to use in the word search (or type \"all\" to include all words):");
 		String wordNumber = in.nextLine();
 		
 		// check if word number is valid int and less than total number of words
 		// if not, then re-prompt and retry
 		boolean wordNumberIsNat = stringIsNatural(wordNumber);
-		while (!wordNumberIsNat) {
-			System.out.println("Invalid input! Enter the number of words to use in the word search:");
+		while (!(wordNumberIsNat || wordNumber.equals("all"))) {
+			System.out.println("Invalid input! Enter the number of words to use in the word search (or type \"all\" to include all words):");
 			wordNumber = in.nextLine();
 			wordNumberIsNat = stringIsNatural(wordNumber);
 		}
-		int wordNo = Integer.parseInt(wordNumber);
-		if (wordNo > words.size()) {
+		int wordNo;
+		if (wordNumber.equals("all")) {
 			wordNo = words.size();
+		}
+		else {
+			wordNo = Integer.parseInt(wordNumber);
+			if (wordNo > words.size()) {
+				wordNo = words.size();
+			}
 		}
 		
 		// print message after all user inputs are taken in
@@ -106,7 +108,8 @@ public class WordSearchGenerator {
 				}
 				
 				else {
-					System.out.println("Due to space constraints, only " + wordsUsed.size() + " words have been included in the puzzle.");
+					System.out.println("Due to space constraints, only " + wordsUsed.size() + " words have been included in this puzzle.");
+					System.out.println();
 					break;
 				}
 				
@@ -120,7 +123,6 @@ public class WordSearchGenerator {
 			// if the word is too short or too long, it cannot be used
 			// continue and retry with the next word
 			if (w.length() > size || w.length() < minWordLength) {
-				System.out.println("Adding word " + w + " failed...");
 				i--; // decrement i to add another word instead
 				continue;
 			}
@@ -144,7 +146,6 @@ public class WordSearchGenerator {
 			}
 			
 			if (count == wordRetry) {
-				System.out.println("Adding word " + w + " failed...");
 				i--; // decrement i to add another word instead
 			}
 			
