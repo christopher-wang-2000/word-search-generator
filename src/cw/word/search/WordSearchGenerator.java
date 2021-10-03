@@ -1,3 +1,7 @@
+// Author: Christopher Wang (christopher.wang@wustl.edu)
+// This program generates a word search of customizable length and number of words
+// based on an input text file containing words separated by line breaks.
+
 package cw.word.search;
 import java.io.*;
 import java.util.*;
@@ -72,10 +76,10 @@ public class WordSearchGenerator {
 		HashSet<String> answers = new HashSet<>();
 		Random r = new Random();
 		
-		// select each word randomly and add it to the grid, one at a time
+		// select and add a random word to the grid, one at a time
 		for (int i = 0; i < wordNo; i++) {
 			
-			// if all words have run out (due to too many being invalid), 
+			// if all words have run out (due to too many being invalid)
 			if (words.isEmpty()) {
 				
 				// if zero words were added, terminate the program
@@ -85,6 +89,10 @@ public class WordSearchGenerator {
 					return;
 				}
 				
+				else {
+					System.out.println("Because too many words were too short or too long, only " + wordsUsed.size() + " words have been included in the puzzle.");
+					break;
+				}
 				
 			}
 			
@@ -96,10 +104,23 @@ public class WordSearchGenerator {
 			// if the word is too short or too long, it cannot be used
 			// continue and retry with the next word
 			if (w.length() > size || w.length() < minWordLength) {
-				i--;
+				i--; // decrement i to add another word instead
 				continue;
 			}
 			
+			// convert word to all uppercase with no punctuation or spaces
+			StringBuilder sb = new StringBuilder();
+			for (int j = 0; j < w.length(); j++) {
+				// if character is a letter, keep it in the string
+				if ((w.charAt(j) >= 'A' && w.charAt(j) <= 'Z')
+						|| (w.charAt(j) >= 'a' && w.charAt(j) <= 'z')) {
+					sb.append(w.charAt(j));
+				}
+			}
+			w = sb.toString().toUpperCase();
+			
+			// try adding the word to the grid multiple times
+			// if it fails too many times, skip and retry with the next word
 			int count = 0;
 			while ((!addWordToGrid(w, grid, wordsUsed, answers)) && count < wordRetry) {
 				count++;
@@ -107,8 +128,7 @@ public class WordSearchGenerator {
 			
 			if (count == wordRetry) {
 				System.out.println("Adding word " + w + " failed...");
-				i--;
-				continue;
+				i--; // decrement i to add another word instead
 			}
 			
 			
@@ -155,7 +175,7 @@ public class WordSearchGenerator {
 		
 		// if string has non-numeric characters, it is not valid
 		for (int i = 0; i < s.length(); i++) {
-			if (s.charAt(i) < 48 || s.charAt(i) > 57) {
+			if (s.charAt(i) < '0' || s.charAt(i) > '9') {
 				return false;
 			}
 		}
