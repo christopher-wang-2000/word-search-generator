@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Messages {
 	
-	public static final String filePrompt = "Enter the path to a text file with words or phrases separated by line breaks:";
+	public static final String filePrompt = "Enter the path to a text file with words or phrases (separated by line break):";
 	public static final String sizePrompt = "Enter the side length of the word search grid:";
 	public static final String wordNumberPrompt = "Enter the number of words to use in the word search (or type \"all\" to include all words):";
 	public static final String invalidInput = "Invalid input! ";
