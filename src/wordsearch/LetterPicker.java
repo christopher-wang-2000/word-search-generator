@@ -33,7 +33,6 @@ public class LetterPicker {
 		
 		// selects a random character with probability proportional to the
 		// frequencies originally generated
-		
 		Random r = new Random();
 		int threshold = r.nextInt(total);
 		int current = 0;

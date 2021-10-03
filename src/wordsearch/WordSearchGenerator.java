@@ -55,18 +55,15 @@ public class WordSearchGenerator {
 		// check if word number is valid int and less than total number of words
 		// if not, then re-prompt and retry
 		boolean wordNumberIsNat = stringIsNatural(wordNumber);
-		while ((!wordNumberIsNat) || Integer.parseInt(wordNumber) >= words.size()) {
-			if (!wordNumberIsNat) {
-				System.out.println("Invalid input! Enter the number of words to use in the word search:");
-			}
-			else {
-				System.out.println("Invalid input! The number you entered is greater than the total number of words in the list.");
-				System.out.println("Enter the number of words to use in the word search:");
-			}
+		while (!wordNumberIsNat) {
+			System.out.println("Invalid input! Enter the number of words to use in the word search:");
 			wordNumber = in.nextLine();
 			wordNumberIsNat = stringIsNatural(wordNumber);
 		}
 		int wordNo = Integer.parseInt(wordNumber);
+		if (wordNo > words.size()) {
+			wordNo = words.size();
+		}
 		
 		// print message after all user inputs are taken in
 		System.out.println("Generating " + size + " x " + size + " word search using " + wordNo + " out of " + words.size() + " words...");
@@ -85,6 +82,9 @@ public class WordSearchGenerator {
 			}
 			words.set(i, sb.toString().toUpperCase());
 		}
+		
+		// create LetterPicker object to generate letter frequencies
+	    LetterPicker lp = new LetterPicker(words);
 	    
 		// initialize objects for generating the puzzle and lists of words used and answers
 		char[][] grid = new char[size][size];
@@ -106,8 +106,7 @@ public class WordSearchGenerator {
 				}
 				
 				else {
-					System.out.println("Because too many words were too long, only " + wordsUsed.size() + " words have been included in the puzzle.");
-					System.out.println("Try increasing the grid size!");
+					System.out.println("Due to space constraints, only " + wordsUsed.size() + " words have been included in the puzzle.");
 					break;
 				}
 				
@@ -121,6 +120,7 @@ public class WordSearchGenerator {
 			// if the word is too short or too long, it cannot be used
 			// continue and retry with the next word
 			if (w.length() > size || w.length() < minWordLength) {
+				System.out.println("Adding word " + w + " failed...");
 				i--; // decrement i to add another word instead
 				continue;
 			}
@@ -151,7 +151,6 @@ public class WordSearchGenerator {
 		}
 		
 		// fill remainder of grid with letters randomly
-		LetterPicker lp = new LetterPicker(words);
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (grid[i][j] == 0) {
