@@ -1,4 +1,5 @@
 Word Search Generator (Created 2021 October 2)
+
 Author: Christopher Wang (christopher.wang@wustl.edu)
 
 This program generates a word search based on the following user-provided inputs:
@@ -7,10 +8,10 @@ This program generates a word search based on the following user-provided inputs
 - The number of words to use from the list
 
 The following .java files are found in word-search-generator/src/wordsearch:
-WordSearchGenerator.java serves as the entry point to the program and contains the code for obtaining user input and randomly selecting words to include.
-WordPlacer.java contains the code that attempts to add a given word to the word search grid with a random starting point and orientation.
-LetterPicker.java contains the code that calculates letter frequencies in the input list and uses these frequencies to randomly select letters to fill blank space in the grid.
-Messages.java contains all messages to the user and functions for printing out lists and the finished word search grid.
+- WordSearchGenerator.java serves as the entry point to the program and contains the code for obtaining user input and randomly selecting words to include.
+- WordPlacer.java contains the code that attempts to add a given word to the word search grid with a random starting point and orientation.
+- LetterPicker.java contains the code that calculates letter frequencies in the input list and uses these frequencies to randomly select letters to fill blank space in the grid.
+- Messages.java contains all messages to the user and functions for printing out lists and the finished word search grid.
 
 pokemon_list is provided as a test example for an input file.
 
