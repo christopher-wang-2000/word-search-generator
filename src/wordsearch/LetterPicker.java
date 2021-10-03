@@ -3,7 +3,7 @@
 // and randomly selects characters according to those frequencies.
 // WordSearchGenerator.java uses this to fill the grid after placing words.
 
-package cw.word.search;
+package wordsearch;
 import java.util.*;
 
 public class LetterPicker {

@@ -4,7 +4,7 @@
 // This program generates a word search of customizable length and number of words
 // based on an input text file containing words separated by line breaks.
 
-package cw.word.search;
+package wordsearch;
 import java.io.*;
 import java.util.*;
 
