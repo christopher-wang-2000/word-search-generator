@@ -1,4 +1,5 @@
 // Author: Christopher Wang (christopher.wang@wustl.edu)
+//
 // This class calculates the letter frequencies from the input file
 // and randomly selects characters according to those frequencies.
 // WordSearchGenerator.java uses this to fill the grid after placing words.
