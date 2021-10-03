@@ -1,4 +1,6 @@
 // Author: Christopher Wang (christopher.wang@wustl.edu)
+// This file contains main and serves as the entry point to the program.
+//
 // This program generates a word search of customizable length and number of words
 // based on an input text file containing words separated by line breaks.
 
@@ -16,7 +18,7 @@ public class WordSearchGenerator {
 	public static final int minWordLength = 2;
 	
 	// number of times to try adding a word to the grid before giving up
-	public static final int wordRetry = 10;
+	public static final int wordRetry = 100;
 
 	public static void main(String[] args) {
 		
@@ -68,7 +70,21 @@ public class WordSearchGenerator {
 		
 		// print message after all user inputs are taken in
 		System.out.println("Generating " + size + " x " + size + " word search using " + wordNo + " out of " + words.size() + " words...");
+		System.out.println();
 		in.close();
+		
+		// converts each word to all uppercase with no punctuation or spaces
+		for (int i = 0; i < words.size(); i++) {
+			StringBuilder sb = new StringBuilder();
+			for (int j = 0; j < words.get(i).length(); j++) {
+				// if character is a letter, keep it in the string
+				if ((words.get(i).charAt(j) >= 'A' && words.get(i).charAt(j) <= 'Z')
+						|| (words.get(i).charAt(j) >= 'a' && words.get(i).charAt(j) <= 'z')) {
+					sb.append(words.get(i).charAt(j));
+				}
+			}
+			words.set(i, sb.toString().toUpperCase());
+		}
 	    
 		// initialize objects for generating the puzzle and lists of words used and answers
 		char[][] grid = new char[size][size];
@@ -132,14 +148,14 @@ public class WordSearchGenerator {
 				i--; // decrement i to add another word instead
 			}
 			
-			
 		}
 		
-		// fill remainder of grid with letters
+		// fill remainder of grid with letters randomly
+		LetterPicker lp = new LetterPicker(words);
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (grid[i][j] == 0) {
-					grid[i][j] = 'Z';
+					grid[i][j] = lp.randomChar();
 				}
 			}
 		}
@@ -152,7 +168,14 @@ public class WordSearchGenerator {
 			}
 			System.out.println();
 		}
+		System.out.println();
 		
+		// print out list of words used
+		Collections.sort(wordsUsed);
+		System.out.println("List of words used: ");
+		for (int i = 0; i < wordsUsed.size(); i++) {
+			System.out.println(wordsUsed.get(i));
+		}
 		
 	}
 	
@@ -341,7 +364,6 @@ public class WordSearchGenerator {
 		
 		return true;
 	}
-	
 	
 
 }
