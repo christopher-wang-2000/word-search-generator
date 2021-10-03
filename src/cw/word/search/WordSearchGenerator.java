@@ -10,7 +10,7 @@ public class WordSearchGenerator {
 	
 	// min and max length of square word search grid
 	public static final int minSize = 5;
-	public static final int maxSize = 20;
+	public static final int maxSize = 25;
 	
 	// minimum acceptable word length
 	public static final int minWordLength = 2;
@@ -90,7 +90,8 @@ public class WordSearchGenerator {
 				}
 				
 				else {
-					System.out.println("Because too many words were too short or too long, only " + wordsUsed.size() + " words have been included in the puzzle.");
+					System.out.println("Because too many words were too long, only " + wordsUsed.size() + " words have been included in the puzzle.");
+					System.out.println("Try increasing the grid size!");
 					break;
 				}
 				
@@ -132,6 +133,24 @@ public class WordSearchGenerator {
 			}
 			
 			
+		}
+		
+		// fill remainder of grid with letters
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (grid[i][j] == 0) {
+					grid[i][j] = 'Z';
+				}
+			}
+		}
+		
+		// print out finished grid
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				// loop through x first
+				System.out.print(grid[j][i] + " ");
+			}
+			System.out.println();
 		}
 		
 		
@@ -258,7 +277,7 @@ public class WordSearchGenerator {
 		
 		// this code should not ever run if the math is correct
 		if (directions.size() == 0) {
-			System.out.println("An error occurred with placing a word...");
+			System.out.println("An unexpected error occurred with placing a word...");
 			return false;
 		}
 		
@@ -270,11 +289,8 @@ public class WordSearchGenerator {
 		int y = startY;
 		for (int i = 0; i < w.length(); i++) {
 			
-			// if the cell is blank (or already contains the correct letter), add the letter
-			// and increment x and y according to the direction
+			// check if the cell is blank (or already contains the correct letter)
 			if (grid[x][y] == 0 || grid[x][y] == w.charAt(i)) {
-				
-				grid[x][y] = w.charAt(i);
 				
 				if (dir == 6 || dir == 7 || dir == 8) {
 					x--; // left
@@ -290,9 +306,31 @@ public class WordSearchGenerator {
 				}
 			}
 			
-			// otherwise, there is a conflict and we need to stop
+			// if not, there is a conflict and we need to stop
 			else {
 				return false;
+			}
+			
+		}
+		
+		// if the check was successful, then retrace our steps and fill in the letters
+		x = startX;
+		y = startY;
+		for (int i = 0; i < w.length(); i++) {
+				
+			grid[x][y] = w.charAt(i);
+			
+			if (dir == 6 || dir == 7 || dir == 8) {
+				x--; // left
+			}
+			else if (dir == 2 || dir == 3 || dir == 4) {
+				x++; // right
+			}
+			if (dir == 1 || dir == 2 || dir == 8) {
+				y--; // up
+			}
+			else if (dir == 4 || dir == 5 || dir == 6) {
+				y++; // down
 			}
 			
 		}
